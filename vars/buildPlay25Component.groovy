@@ -80,7 +80,7 @@ def call(Map config) {
         |""".stripMargin()
       }
       stage('Package') {
-       echo ' sbt ";project ${config.get('module', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"'
+       echo ' sbt ";project ${config.get(\'module\', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"'
         
       }
     }
