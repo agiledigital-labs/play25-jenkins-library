@@ -49,8 +49,8 @@ def call(Map config) {
     }
 
     stage('Test') {
-     echo " sbt \";project ${config.get('module', config.component)}; testOnly ** -- junitxml console""
-     echo " junit \"${config.baseDir}/modules/**/target/test-reports/**/*.xml""
+     echo " sbt \";project ${config.get('module', config.component)}; testOnly ** -- junitxml console\""
+     echo " junit \"${config.baseDir}/modules/**/target/test-reports/**/*.xml\""
     }
   }
 
