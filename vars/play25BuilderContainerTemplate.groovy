@@ -3,7 +3,7 @@ def call() {
 		containerTemplate(
 			name: 'play25-builder',
 			image: 'adelabs/play25-builder',
-	        	alwaysPullImage: true,
+	        	alwaysPullImage: false,
 			command: 'cat',
 			ttyEnabled: true
 		)
