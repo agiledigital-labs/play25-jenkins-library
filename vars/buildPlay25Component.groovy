@@ -54,7 +54,7 @@ def call(Map config) {
     }
   }
 
-  if(config.stage != 'dist') { 
+  if(config.stage == 'dist') { 
     container('play25-builder') {
       stage('Inject configuration') {
         // TODO: Allow ${SETTINGS_CONTEXT} to be overriden
@@ -80,19 +80,20 @@ def call(Map config) {
         |""".stripMargin()
       }
       stage('Package') {
-        sbt ";project ${config.get('module', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"
+       echo ' sbt ";project ${config.get('module', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"'
+        
       }
     }
 
     stage('Archive to Jenkins') {
-      def tarName = "${fullComponentName}-${buildVersion}.tar.gz"
+     echo ' def tarName = "${fullComponentName}-${buildVersion}.tar.gz"'
       // Re-compress dist zip file as tar gzip without top level folder
-      sh "unzip ${modulePath}/target/universal/${fullComponentName}-${buildVersion}.zip"
+      echo 'sh "unzip ${modulePath}/target/universal/${fullComponentName}-${buildVersion}.zip"'
       // Remove dist .bat, and rename main executable to have a generic name
-      sh "rm \"${fullComponentName}-${buildVersion}/bin/${fullComponentName}.bat\""
-      sh "mv \"${fullComponentName}-${buildVersion}/bin/${fullComponentName}\" \"${fullComponentName}-${buildVersion}/bin/dist\""
-      sh "tar -czvf \"${tarName}\" -C \"${fullComponentName}-${buildVersion}\" ."
-      archiveArtifacts tarName
+      echo 'sh "rm \"${fullComponentName}-${buildVersion}/bin/${fullComponentName}.bat\""'
+     echo ' sh "mv \"${fullComponentName}-${buildVersion}/bin/${fullComponentName}\" \"${fullComponentName}-${buildVersion}/bin/dist\""'
+      echo 'sh "tar -czvf \"${tarName}\" -C \"${fullComponentName}-${buildVersion}\" ."'
+     echo ' archiveArtifacts tarName'
     }
   }
 }
