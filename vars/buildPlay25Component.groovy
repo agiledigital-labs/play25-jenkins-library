@@ -45,7 +45,7 @@ def call(Map config) {
     }
 
     stage('Compile') {
-      echo "sbt \"compile\""
+      sbt "compile"
     }
 
     stage('Test') {
