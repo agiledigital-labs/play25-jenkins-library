@@ -35,12 +35,12 @@ def call(Map config) {
     }
 
     stage('Compile') {
-     echo sbt "compile"
+     sbt "compile"
     }
 
     stage('Test') {
-     echo sbt ";project ${config.get('module', config.component)}; testOnly ** -- junitxml console"
-     echo junit "${config.baseDir}/modules/**/target/test-reports/**/*.xml"
+     sbt ";project ${config.get('module', config.component)}; testOnly ** -- junitxml console"
+     junit "${config.baseDir}/modules/**/target/test-reports/**/*.xml"
     }
   }
 
@@ -70,7 +70,7 @@ def call(Map config) {
         |""".stripMargin()
       }
       stage('Package') {
-       echo ' sbt ";project ${config.get(\'module\', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"'
+       sbt ";project ${config.get('module', config.component)}; set name := \"${fullComponentName}\"; set version := \"${buildVersion}\"; dist"
         
       }
     }
